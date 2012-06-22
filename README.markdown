@@ -10,7 +10,8 @@ MyRouter = ReactiveRouter.extend({
   home: function() { this.goto('home'); }
 })
 
-MyRouter.current_page(); // might be 'home'
+Router = new MyRouter();
+Router.current_page(); // might be 'home'
 ```
 
 A `FilteredRouter` adds filtering capabilities to the string returned by `current_page`. For instance, you could hook into the new Meteor Auth[https://github.com/meteor/meteor/wiki/Getting-started-with-Auth] stuff like so:
@@ -34,6 +35,7 @@ MyRouter = FilteredRouter.extend({
   home: function() { this.goto('home'); }
 })
 
-MyRouter.current_page(); // might be 'home'
+Router = new MyRouter();
+Router.current_page(); // might be 'home' or 'signin'
 ```
 
