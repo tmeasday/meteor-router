@@ -1,6 +1,7 @@
 Meteor Reactive + Filtering Routers
 -----------------------------------
 
+_NOTE: this library requires the deps-extension package[https://github.com/meteor/meteor/pull/193]. Read more about it here: http://bindle.me/blog/index.php/679/page-transitions-in-meteor-getleague-com_
 
 A `ReactiveRouter` is a simple beast, it's just a Bootstrap Router with a reactive variable `current_page()`. To set the variable, call `goto()`.
 
