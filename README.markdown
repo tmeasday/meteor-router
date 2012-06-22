@@ -11,7 +11,10 @@ MyRouter = ReactiveRouter.extend({
 })
 
 Router = new MyRouter();
-Router.current_page(); // might be 'home'
+Meteor.startup(function() {
+  Backbone.history.start();
+  Router.current_page(); // might be 'home'
+})
 ```
 
 A `FilteredRouter` adds filtering capabilities to the string returned by `current_page`. For instance, you could hook into the new Meteor Auth[https://github.com/meteor/meteor/wiki/Getting-started-with-Auth] stuff like so:
@@ -20,7 +23,7 @@ A `FilteredRouter` adds filtering capabilities to the string returned by `curren
 MyRouter = FilteredRouter.extend({
   initialize: function() {
     FilteredRouter.prototype.initialize.call(this);
-    this.filter(this.require_login, {only: home});
+    this.filter(this.require_login, {only: ['home']});
   },
   
   require_login: function(page) {
@@ -36,6 +39,9 @@ MyRouter = FilteredRouter.extend({
 })
 
 Router = new MyRouter();
-Router.current_page(); // might be 'home' or 'signin'
+Meteor.startup(function() {
+  Backbone.history.start();
+  Router.current_page(); // might be 'home' or 'signin'
+})
 ```
 
