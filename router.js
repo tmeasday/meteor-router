@@ -23,12 +23,19 @@ ReactiveRouter = Backbone.Router.extend({
       page_f = function() { return copy; }
     }
     
-    var context = new Meteor.deps.Context();
-    context.on_invalidate(function() {
-      self.goto(page_f);
+    // clean up the old context
+    if (self.context) {
+      self.context.finished = true;
+      self.context.invalidate();
+    }
+      
+    self.context = new Meteor.deps.Context();
+    self.context.on_invalidate(function(context) {
+      if (!context.finished)
+        ReactiveRouter.prototype.goto.call(self, page_f);
     });
     
-    context.run(function() {
+    self.context.run(function() {
       self.current_page.set(page_f())
     });
   }
