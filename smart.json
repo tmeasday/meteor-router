@@ -1,0 +1,7 @@
+{
+  "packages": {
+    "deps-extensions": {
+      "git": "https://github.com/tmeasday/meteor-deps-extensions.git"
+    }
+  }
+}
