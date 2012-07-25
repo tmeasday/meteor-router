@@ -4,6 +4,7 @@ Meteor Reactive + Filtering Routers
 _Read more about it here: http://bindle.me/blog/index.php/679/page-transitions-in-meteor-getleague-com_
 
 **Install**
+
 Use [meteorite](http://possibilities.github.com/meteorite/):
 
 ```json
