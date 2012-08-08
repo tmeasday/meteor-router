@@ -1,11 +1,13 @@
 Meteor Reactive + Filtering Routers
------------------------------------
+===================================
 
 _Read more about it here: http://bindle.me/blog/index.php/679/page-transitions-in-meteor-getleague-com_
 
-**Using**
+Using
+-----
 
-***ReactiveRouter***
+### ReactiveRouter
+
 A `ReactiveRouter` is a simple beast, it's just a Backbone Router with a reactive variable `current_page()`. To set the variable, call `goto()`.
 
 ```js
@@ -20,7 +22,8 @@ Meteor.startup(function() {
 })
 ```
 
-***Template***
+### Templates
+
 To actually use current page, the package provides two handlebars helpers to allow the following:
 
 ```handlebars
@@ -33,8 +36,8 @@ To actually use current page, the package provides two handlebars helpers to all
   <h1>Welcome!</h1>
 </template>
 ```
-***ReactiveRouter***
 
+### FilteredRouter
 
 A `FilteredRouter` adds filtering capabilities to the string returned by `current_page`. For instance, you could hook into the new Meteor Auth[https://github.com/meteor/meteor/wiki/Getting-started-with-Auth] stuff like so:
 
@@ -66,7 +69,8 @@ Meteor.startup(function() {
 })
 ```
 
-**Installing**
+Installing
+----------
 
 Use [meteorite](http://possibilities.github.com/meteorite/):
 
