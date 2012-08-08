@@ -6,6 +6,7 @@ Package.on_use(function (api, where) {
   api.use('deps-extensions', 'client');
   api.use('backbone', 'client');
   api.add_files('router.js', 'client');
+  api.add_files('router_helpers.js', 'client');
 });
 
 
