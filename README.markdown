@@ -69,6 +69,10 @@ Meteor.startup(function() {
 })
 ```
 
+###Example
+
+Checkout `examples/simple-routed-app` for an extremely simple example of a filtered routed app. (To run, use meteorite: `cd examples/simple-routed-app; mrt run`).
+
 Installing
 ----------
 

@@ -1,0 +1,21 @@
+<head>
+  <title>simple-routed-app</title>
+</head>
+
+<body>
+  {{{render currentPage}}}
+</body>
+
+<template name="sign_in">
+  <h4>Please Sign in!</h4>
+  
+  <form>
+    <input name="username" placeholder="Please enter your name"/>
+    <button type="submit">Signin</button>
+  </form>
+</template>
+
+<template name="home">
+  <h1>Welcome {{username}}!</h1>
+  <a class="logout">Signout</a>
+</template>
