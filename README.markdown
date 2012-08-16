@@ -78,16 +78,6 @@ Installing
 
 Use [meteorite](http://possibilities.github.com/meteorite/):
 
-```json
-{
-  "packages": {
-    "router": {
-      "git": "https://github.com/tmeasday/meteor-router.git"
-    }
-  }
-}
-```
-
 Then add via:
 
 ```bash
