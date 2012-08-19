@@ -36,7 +36,7 @@ To actually use current page, the package provides two handlebars helpers to all
 
 ### FilteredRouter
 
-A `FilteredRouter` adds filtering capabilities to the string returned by `current_page`. For instance, you could hook into the new Meteor Auth[https://github.com/meteor/meteor/wiki/Getting-started-with-Auth] stuff like so:
+A `FilteredRouter` adds filtering capabilities to the string returned by `current_page`. For instance, you could hook into the new [Meteor Auth](https://github.com/meteor/meteor/wiki/Getting-started-with-Auth) stuff like so:
 
 ```js
 MyRouter = FilteredRouter.extend({
