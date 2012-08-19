@@ -2,7 +2,7 @@ if (Meteor.is_client) {
   SimpleRouter = FilteredRouter.extend({
     initialize: function() {
       FilteredRouter.prototype.initialize.call(this);
-      this.filter(this.require_login, {only: ['home']});
+      this.filter(this.require_login, {only: ['welcome']});
     },
     
     require_login: function(page) {
@@ -14,13 +14,17 @@ if (Meteor.is_client) {
       }
     },
     
-    routes: {'': 'home'},
-    home: function() { this.goto('home'); }
+    routes: {
+      'welcome': 'welcome', 
+      '': 'home'
+    },
+    home: function() { this.goto('home'); },
+    welcome: function() { this.goto('welcome'); }
   })
   
   var Router = new SimpleRouter();
   Meteor.startup(function() {
-    Backbone.history.start();
+    Backbone.history.start({pushState: true});
   });
   
   Template.sign_in.events = {
@@ -30,9 +34,23 @@ if (Meteor.is_client) {
     }
   }
   
-  Template.home.username = function() { return Session.get('username'); }
   Template.home.events = {
-    'click .logout': function() { Session.set('username', false); }
+    'click .welcome': function(e) {
+      e.preventDefault();
+      Router.navigate('welcome', {trigger: true});
+    }
+  }
+  
+  Template.welcome.username = function() { return Session.get('username'); }
+  Template.welcome.events = {
+    'click .logout': function(e) {
+      e.preventDefault();
+      Session.set('username', false);
+    },
+    'click .home': function(e) { 
+      e.preventDefault();
+      Router.navigate('', {trigger: true});
+    }
   }
 
 }

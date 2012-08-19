@@ -6,16 +6,23 @@
   {{{render currentPage}}}
 </body>
 
+<template name="home">
+  <h1>This is the example!</h1>
+  <a href="/welcome" class="welcome">Click here to go to your personalized welcome page</a>
+</template>
+
 <template name="sign_in">
   <h4>Please Sign in!</h4>
-  
+
   <form>
     <input name="username" placeholder="Please enter your name"/>
     <button type="submit">Signin</button>
   </form>
 </template>
 
-<template name="home">
+<template name="welcome">
   <h1>Welcome {{username}}!</h1>
-  <a class="logout">Signout</a>
+  <a href="" class="logout">Signout</a>
+  <a href="/" class="home">Return home</a>
 </template>
+
