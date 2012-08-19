@@ -1,14 +1,11 @@
 Meteor Reactive + Filtering Routers
 ===================================
-
-_Read more about it here: http://bindle.me/blog/index.php/679/page-transitions-in-meteor-getleague-com_
-
 Using
 -----
 
 ### ReactiveRouter
 
-A `ReactiveRouter` is a simple beast, it's just a Backbone Router with a reactive variable `current_page()`. To set the variable, call `goto()`.
+A `ReactiveRouter` is a simple beast, it's just a [Backbone Router](http://backbonejs.org/#Router) with a reactive variable `current_page()`. To set the variable, call `goto()`.
 
 ```js
 MyRouter = ReactiveRouter.extend({
@@ -69,9 +66,11 @@ Meteor.startup(function() {
 })
 ```
 
-###Example
+###Examples
 
-Checkout `examples/simple-routed-app` for an extremely simple example of a filtered routed app. (To run, use meteorite: `cd examples/simple-routed-app; mrt run`).
+Check out `examples/simple-routed-app` for an extremely simple example of a filtered routed app. (To run, use meteorite: `cd examples/simple-routed-app; mrt run`).
+
+Additionally, you might want to read [my blog post](http://bindle.me/blog/index.php/679/page-transitions-in-meteor-getleague-com) about transitions in Meteor.
 
 Installing
 ----------
