@@ -3,11 +3,9 @@
   "description": "A Reactive Router for multipage apps",
   "homepage": "https://github.com/tmeasday/meteor-router",
   "author": "Tom Coleman <tom@thesnail.org>",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "git": "https://github.com/tmeasday/meteor-router.git",
   "packages": {
-    "deps-extensions" : {
-      "git": "https://github.com/tmeasday/meteor-deps-extensions.git"
-    }
+    "deps-extensions" : {}
   }
 }
