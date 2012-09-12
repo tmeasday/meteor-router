@@ -15,7 +15,7 @@ MyRouter = ReactiveRouter.extend({
 
 Router = new MyRouter();
 Meteor.startup(function() {
-  Backbone.history.start();
+  Backbone.history.start({pushState: true});
 })
 ```
 
