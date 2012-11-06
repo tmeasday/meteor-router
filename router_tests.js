@@ -1,69 +1,87 @@
-Tinytest.add("ReactiveRouter current_page", function(test) {
-  var router = new ReactiveRouter();
-  
-  test.equal(router.current_page(), 'loading');
-  
-  router.goto('foo');
-  test.equal(router.current_page(), 'foo');
-  
-  router.goto(function() { 
-    return 'bar';
+Tinytest.add("Router page", function(test) {
+  Meteor.Router.resetFilters();
+  Meteor.Router.add({
+    '/foo': 'foo'
   });
-  test.equal(router.current_page(), 'bar');
+  
+  test.equal(Meteor.Router.page(), null);
+  
+  Meteor.Router.to('/foo')
+  test.equal(Meteor.Router.page(), 'foo');
 });
 
-Tinytest.add("ReactiveRouter reactivity", function(test) {
+Tinytest.add("Router reactivity", function(test) {
   var context_called = 0;
-  var router = new ReactiveRouter();
-  var page = router.current_page();
-  Meteor.deps.await(function() { return router.current_page() != page; }, function() {
-    page = router.current_page();
+  Meteor.Router.resetFilters();
+  Meteor.Router.add({
+    '/foo': 'foo',
+    '/bar': 'bar'
+  })
+  
+  Meteor.autorun(function() {
+    Meteor.Router.page();
     context_called += 1;
   });
   
-  test.equal(context_called, 0);
-  
-  router.goto('foo');
-  Meteor.flush()
   test.equal(context_called, 1);
   
-  router.goto('bar');
+  Meteor.Router.to('/foo')
   Meteor.flush()
   test.equal(context_called, 2);
+  
+  Meteor.Router.to('/bar')
+  Meteor.flush()
+  test.equal(context_called, 3);
 });
 
-Tinytest.add("FilteredRouter filter options", function(test) {
-  var router = new FilteredRouter();
-  router.filter(function(page) { return 'something_else'; }, {only: ['foo']});
-  router.filter(function(page) { return 'a third thing'; }, {except: ['something_else', 'baz']});
+Tinytest.add("Router filtering", function(test) {
+  Meteor.Router.resetFilters();
+  Meteor.Router.add({
+    '/foo': 'foo',
+    '/bar': 'bar',
+    '/baz': 'baz'
+  })
   
-  router.goto('foo')
-  test.equal(router.current_page(), 'something_else');
+  Meteor.Router.filters({
+    'something_else': function() { return 'something_else'; },
+    'third': function() { return 'a third thing' }
+  })
+  Meteor.Router.filter('something_else', {only: 'foo'});
+  Meteor.Router.filter('third', {except: ['something_else', 'baz']});
   
-  router.goto('bar')
-  test.equal(router.current_page(), 'a third thing');
+  Meteor.Router.to('/foo');
+  test.equal(Meteor.Router.page(), 'something_else');
   
-  router.goto('baz')
-  test.equal(router.current_page(), 'baz');
+  Meteor.Router.to('/bar');
+  test.equal(Meteor.Router.page(), 'a third thing');
+  
+  Meteor.Router.to('/baz');
+  test.equal(Meteor.Router.page(), 'baz');
 });
 
 Tinytest.add("FilteredRouter filter reactivity", function(test) {
-  var router = new FilteredRouter();
-  var reactive = {};
-  Meteor.deps.add_reactive_variable(reactive, 'variable', false);
-  
-  router.filter(function(page) {
-    if (reactive.variable()) {
-      return page;
-    } else {
-      return 'something_else';
-    }
+  Meteor.Router.resetFilters();
+  Meteor.Router.add({
+    '/foo': 'foo'
   });
   
-  router.goto('foo')
-  test.equal(router.current_page(), 'something_else');
+  Meteor.Router.filters({
+    'something_else': function(page) {
+      if (Session.get('something_else')) {
+        return 'something_else';
+      } else {
+        return page;
+      }
+    }
+  });
+  Meteor.Router.filter('something_else');
   
-  reactive.variable.set(true);
+  Session.set('something_else', null);
   Meteor.flush();
-  test.equal(router.current_page(), 'foo');
+  Meteor.Router.to('/foo');
+  test.equal(Meteor.Router.page(), 'foo');
+  
+  Session.set('something_else', true);
+  Meteor.flush();
+  test.equal(Meteor.Router.page(), 'something_else');
 });

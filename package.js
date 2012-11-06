@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "Extension to backbone's router to achieve common reactivity and filters"
+  summary: "A Reactive Router built on page.js"
 });
 
 Package.on_use(function (api, where) {

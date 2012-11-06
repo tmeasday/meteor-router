@@ -82,6 +82,12 @@
     self._activeFilters.push(options);
   }
   
+  // Shouldn't need to use this, more for testing
+  // turn off all filters
+  Router.prototype.resetFilters = function() {
+    this._activeFilters = [];
+  }
+  
   // run all filters over page
   Router.prototype._applyFilters = function(page) {
     var self = this;
