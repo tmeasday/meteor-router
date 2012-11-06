@@ -1,5 +1,5 @@
 {
   "packages": {
-    "router": {"path": "../../"}
+    "router": {"path": "../.."}
   }
 }

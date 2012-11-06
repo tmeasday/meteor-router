@@ -1,30 +1,19 @@
 if (Meteor.is_client) {
-  SimpleRouter = FilteredRouter.extend({
-    initialize: function() {
-      FilteredRouter.prototype.initialize.call(this);
-      this.filter(this.require_login, {only: ['welcome']});
-    },
-    
-    require_login: function(page) {
-      var username = Session.get('username');
-      if (username) {
-        return page;
-      } else {
-        return 'sign_in';
-      }
-    },
-    
-    routes: {
-      'welcome': 'welcome', 
-      '': 'home'
-    },
-    home: function() { this.goto('home'); },
-    welcome: function() { this.goto('welcome'); }
-  })
   
-  var Router = new SimpleRouter();
-  Meteor.startup(function() {
-    Backbone.history.start({pushState: true});
+//         this.filter(this.require_login, {only: ['welcome']});
+  
+// require_login: function(page) {
+//   var username = Session.get('username');
+//   if (username) {
+//     return page;
+//   } else {
+//     return 'sign_in';
+//   }
+// },
+  
+  Meteor.Router.add({
+    '/': 'home',
+    '/welcome': 'welcome'
   });
   
   Template.sign_in.events = {
@@ -37,7 +26,7 @@ if (Meteor.is_client) {
   Template.home.events = {
     'click .welcome': function(e) {
       e.preventDefault();
-      Router.navigate('welcome', {trigger: true});
+      Meteor.Router.to('/welcome');
     }
   }
   
@@ -49,7 +38,7 @@ if (Meteor.is_client) {
     },
     'click .home': function(e) { 
       e.preventDefault();
-      Router.navigate('', {trigger: true});
+      Meteor.Router.to('/');
     }
   }
 

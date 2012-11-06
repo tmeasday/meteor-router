@@ -1,14 +1,9 @@
 if (Handlebars) {
-  // a simple handlebars function that lets you render a page based a reactive var
-  Handlebars.registerHelper('render', function(name) {
+  Handlebars.registerHelper('renderPage', function() {
+    var name = Meteor.Router.page();
+    
     if (Template[name])
-      return Template[name]();
-  });
-  
-  // if Router is defined, provide a currentPage helper
-  Handlebars.registerHelper('currentPage', function() {
-    if (Router)
-      return Router.current_page();
+      return new Handlebars.SafeString(Template[name]());
   });
 }
   
