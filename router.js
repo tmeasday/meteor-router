@@ -18,7 +18,11 @@
     // unexpected if it has side effects. This is essentially a memoize pattern
     self._autorunHandle && self._autorunHandle.stop();
     self._autorunHandle = Meteor.autorun(function() {
-      self._page = self._applyFilters(pageFn.call(context));
+      var args = [];
+      for (key in context.params)
+        args.push(context.params[key]);
+      
+      self._page = self._applyFilters(pageFn.call(context, args));
       self.listeners.invalidateAll();
     })
   }

@@ -1,7 +1,13 @@
 if (Meteor.is_client) {
   Meteor.Router.add({
     '/': 'home',
-    '/welcome': 'welcome'
+    
+    '/welcome': 'welcome',
+    
+    '/posts/:id': function(id) {
+      Session.set('postId', id);
+      return 'post';
+    }
   });
   
   Meteor.Router.filters({
@@ -31,5 +37,8 @@ if (Meteor.is_client) {
       Session.set('username', false);
     }
   }
-
+  
+  Template.post.helpers({
+    id: function() { return Session.get('postId'); }
+  })
 }
