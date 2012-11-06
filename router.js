@@ -6,7 +6,7 @@
   }
   
   // internal, don't use
-  Router.prototype._setPageFn = function(pageFn) {
+  Router.prototype._setPageFn = function(pageFn, context) {
     var self = this;
     
     // the current function that generates self._page
@@ -16,8 +16,7 @@
     // unexpected if it has side effects. This is essentially a memoize pattern
     self._autorunHandle && self._autorunHandle.stop();
     self._autorunHandle = Meteor.autorun(function() {
-      console.log(pageFn());
-      self._page = pageFn();
+      self._page = pageFn.call(context);
       self.listeners.invalidateAll();
     })
   }
