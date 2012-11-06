@@ -24,22 +24,11 @@ if (Meteor.is_client) {
     }
   }
   
-  Template.home.events = {
-    'click .welcome': function(e) {
-      e.preventDefault();
-      Meteor.Router.to('/welcome');
-    }
-  }
-  
   Template.welcome.username = function() { return Session.get('username'); }
   Template.welcome.events = {
     'click .logout': function(e) {
       e.preventDefault();
       Session.set('username', false);
-    },
-    'click .home': function(e) { 
-      e.preventDefault();
-      Meteor.Router.to('/');
     }
   }
 
