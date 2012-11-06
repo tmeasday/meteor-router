@@ -3,7 +3,7 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
-  api.use('page.js', 'client');
+  api.use('page-js', 'client');
   api.add_files('router.js', 'client');
   api.add_files('router_helpers.js', 'client');
 });
