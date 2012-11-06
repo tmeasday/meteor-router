@@ -1,20 +1,21 @@
 if (Meteor.is_client) {
-  
-//         this.filter(this.require_login, {only: ['welcome']});
-  
-// require_login: function(page) {
-//   var username = Session.get('username');
-//   if (username) {
-//     return page;
-//   } else {
-//     return 'sign_in';
-//   }
-// },
-  
   Meteor.Router.add({
     '/': 'home',
     '/welcome': 'welcome'
   });
+  
+  Meteor.Router.filters({
+    requireLogin: function(page) {
+      var username = Session.get('username');
+      if (username) {
+        return page;
+      } else {
+        return 'sign_in';
+      }
+    }
+  });
+  
+  Meteor.Router.filter('requireLogin', {only: 'welcome'})
   
   Template.sign_in.events = {
     'submit form': function(e) {
