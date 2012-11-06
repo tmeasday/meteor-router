@@ -1,70 +1,98 @@
-Meteor Reactive + Filtering Routers
+Meteor Router
 ===================================
-Using
------
 
-### ReactiveRouter
+The Meteor Router builds on [page.js](http://visionmedia.github.com/page.js/) to build a reactive, filtering router for Meteor apps.
 
-A `ReactiveRouter` is a simple beast, it's just a [Backbone Router](http://backbonejs.org/#Router) with a reactive variable `current_page()`. To set the variable, call `goto()`.
+### Router API
 
+#### Basics
+
+To find the current page:
 ```js
-MyRouter = ReactiveRouter.extend({
-  routes: {'': 'home'},
-  home: function() { this.goto('home'); }
-})
-
-Router = new MyRouter();
-Meteor.startup(function() {
-  Backbone.history.start({pushState: true});
-})
+Meteor.Router.page();
 ```
 
-### Templates
-
-To actually use current page, the package provides two handlebars helpers to allow the following:
+This is a reactive variable which will trigger invalidations as the app changes pages. Usually, you'll just want to render the template that corresponds to the current page:
 
 ```handlebars
-<html>
-  {{{render currentPage}}}
-</html>
-
-<!-- This will render if Router.current_page == 'home' -->
-<template name="home">
-  <h1>Welcome!</h1>
-</template>
+<!-- this will render the 'news' template in the current example -->
+{{renderPage}}
 ```
 
-### FilteredRouter
+To define a route, simplly specify the URL it matches and the name of the template it should render. If you want to get fancy, you can specify a reactive function that returns a template name. It will get repeatedly executed as it's reactive dependencies change.
+```js
+Meteor.Router.add({
+  '/news': 'news',
+  
+  '/about': function() {
+    if (Session.get('aboutUs')) {
+      return 'aboutUs';
+    } else {
+      return 'aboutThem';
+    }
+  }
+});
+```
 
-A `FilteredRouter` adds filtering capabilities to the string returned by `current_page`. For instance, you could hook into the new [Meteor Auth](https://github.com/meteor/meteor/wiki/Getting-started-with-Auth) stuff like so:
+To navigate to such a URL from in the app, either create a link which links to the URL (the router will intercept clicks and trigger relevant state changes), or call directly:
 
 ```js
-MyRouter = FilteredRouter.extend({
-  initialize: function() {
-    FilteredRouter.prototype.initialize.call(this);
-    this.filter(this.require_login, {only: ['home']});
-  },
-  
-  require_login: function(page) {
-    if (!Meteor.user()) {
-      return 'signin';
-    } else if (Meteor.user().loading)
-      return 'loading';
-    } else {
-      return page;
-    }
-  },
-  
-  routes: {'': 'home'},
-  home: function() { this.goto('home'); }
-})
-
-Router = new MyRouter();
-Meteor.startup(function() {
-  Backbone.history.start();
-  Router.current_page(); // might be 'home' or 'signin'
-})
+Meteor.Router.to('/news');
 ```
+
+#### Route Matches
+
+When the route function is called, `this` corresponds to a page.js [`Context`](https://github.com/visionmedia/page.js#contextcanonicalpath), allowing you to do the following:
+
+```js
+Meteor.Router.add({
+  'posts/:id': function(id) {
+     console.log('we are at ' + this.canonicalPath);
+     console.log("our parameters: " + this.params);
+
+     // access parameters in order a function args too
+     Session.set('currentPostId', id);
+     return 'showPost';
+  }
+});
+```
+
+#### Filtering
+
+The current system of filtering in this package is the equivalent of an `after_filter` in rails. To add a filter which will render the correct template for a page which requires login:
+
+```js
+Meteor.Router.filters({
+  'checkLoggedIn': function(page) {
+    if (Meteor.user()) {
+      if (Meteor.user().loading) {
+        return 'loading';
+      } else {
+        return page;
+      }
+    } else {
+      return 'signin';
+    }
+  });
+});
+```
+
+To turn the filter on, use one of:
+
+```js
+// applies to all pages
+Meteor.Router.filter('checkLoggedIn');
+
+// applies to specific pages
+Meteor.Router.filter('checkLoggedIn', {only: 'profile'});
+Meteor.Router.filter('checkLoggedIn', {except: 'home'});
+```
+
+
+
+
+
+
 
 ###Examples
 
