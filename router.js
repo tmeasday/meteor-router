@@ -1,7 +1,25 @@
 (function() {
   var Router = function() {
     this._page = null;
+    this._autorunHandle = null;
     this.listeners = new Meteor.deps._ContextSet();
+  }
+  
+  // internal, don't use
+  Router.prototype._setPageFn = function(pageFn) {
+    var self = this;
+    
+    // the current function that generates self._page
+    // we could just store pageFn and call it everytime someone
+    // calls Meteor.Router.page(), but this would lead to 
+    // the routing function getting called multiple times, which could be
+    // unexpected if it has side effects. This is essentially a memoize pattern
+    self._autorunHandle && self._autorunHandle.stop();
+    self._autorunHandle = Meteor.autorun(function() {
+      console.log(pageFn());
+      self._page = pageFn();
+      self.listeners.invalidateAll();
+    })
   }
   
   Router.prototype.add = function(routesMap) {
@@ -9,13 +27,11 @@
     
     _.each(_.keys(routesMap), function(path) {
       var endpoint = routesMap[path];
+      if (! _.isFunction(endpoint)) {
+        endpoint = _.bind(_.identity, null, endpoint);
+      }
       
-      page(path, function() {
-        _.isFunction(endpoint) && (endpoint = endpoint());
-        
-        self._page = endpoint;
-        self.listeners.invalidateAll();
-      });
+      page(path, _.bind(self._setPageFn, self, endpoint));
     });
   }
   
