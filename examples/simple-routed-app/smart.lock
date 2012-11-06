@@ -14,7 +14,7 @@
       "router": {
         "path": "../.."
       },
-      "page.js": {
+      "page-js": {
         "git": "https://github.com/tmeasday/meteor-page-js.git",
         "tag": "v1.3.1",
         "commit": "ee0b651869928abe50b5d06d7f32ccd2e657883a"
