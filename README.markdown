@@ -19,7 +19,7 @@ This is a reactive variable which will trigger invalidations as the app changes 
 {{renderPage}}
 ```
 
-To define a route, simplly specify the URL it matches and the name of the template it should render. If you want to get fancy, you can specify a reactive function that returns a template name. It will get repeatedly executed as it's reactive dependencies change.
+To define a route, simply specify the URL it matches and the name of the template it should render. If you want to get fancy, you can specify a reactive function that returns a template name. It will get repeatedly executed as its reactive dependencies change.
 ```js
 Meteor.Router.add({
   '/news': 'news',
@@ -59,7 +59,7 @@ Meteor.Router.add({
 
 #### Filtering
 
-The current system of filtering in this package is the equivalent of an `after_filter` in rails. To add a filter which will render the correct template for a page which requires login:
+The current system of filtering in this package is the equivalent of an `after_filter` in Rails. To add a filter which will render the correct template for a page which requires login:
 
 ```js
 Meteor.Router.filters({

@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "A Reactive Router built on page.js"
+  summary: "A reactive router built on page.js"
 });
 
 Package.on_use(function (api, where) {
