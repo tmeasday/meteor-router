@@ -1,7 +1,7 @@
 Meteor Router
 ===================================
 
-The Meteor Router builds on [page.js](http://visionmedia.github.com/page.js/) to build a reactive, filtering router for Meteor apps.
+The Meteor Router builds on [page.js](https://github.com/tmeasday/meteor-page-js) to build a reactive, filtering router for Meteor apps.
 
 ### Router API
 
