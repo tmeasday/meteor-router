@@ -40,7 +40,7 @@ To navigate to such a URL from in the app, either create a link which links to t
 Meteor.Router.to('/news');
 ```
 
-*NOTE* that this doesn't reload the app, it instead uses HTML5 `pushState` to change the URL whilst remaining loaded.
+Note that this doesn't reload the app, it instead uses HTML5 `pushState` to change the URL whilst remaining loaded.
 
 #### Route Matches
 
