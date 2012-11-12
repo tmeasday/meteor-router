@@ -1,4 +1,4 @@
-if (Handlebars) {
+if (typeof Handlebars !== 'undefined') {
   Handlebars.registerHelper('renderPage', function() {
     var name = Meteor.Router.page();
     
