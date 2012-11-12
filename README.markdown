@@ -98,8 +98,7 @@ Check out `examples/simple-routed-app` for an extremely simple example of a filt
 
 Additionally, you might want to read [my blog post](http://bindle.me/blog/index.php/679/page-transitions-in-meteor-getleague-com) about transitions in Meteor.
 
-Installing
-----------
+###Installing
 
 Use [meteorite](http://possibilities.github.com/meteorite/):
 
@@ -109,3 +108,9 @@ Then add via:
 mrt add router
 ```
 
+###Contributing
+
+To run the tests, ensure that the router is checked out to a folder called `router`, and then simply run
+```bash
+mrt
+```

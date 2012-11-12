@@ -6,9 +6,14 @@
   },
   "dependencies": {
     "basePackages": {
-      "page-js": {}
+      "router": {
+        "path": "."
+      }
     },
     "packages": {
+      "router": {
+        "path": "."
+      },
       "page-js": {
         "git": "https://github.com/tmeasday/meteor-page-js.git",
         "tag": "v1.3.1",
