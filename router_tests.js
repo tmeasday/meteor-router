@@ -1,13 +1,21 @@
 Tinytest.add("Router page", function(test) {
   Meteor.Router.resetFilters();
   Meteor.Router.add({
-    '/foo': 'foo'
+    '/foo': 'foo',
+    '/bar/:id': function(id) {
+      Session.set('id', id);
+      return 'bar';
+    }
   });
   
   test.equal(Meteor.Router.page(), null);
   
-  Meteor.Router.to('/foo')
+  Meteor.Router.to('/foo');
   test.equal(Meteor.Router.page(), 'foo');
+  
+  Meteor.Router.to('/bar/1');
+  test.equal(Meteor.Router.page(), 'bar');
+  test.equal(Session.get('id'), '1');
 });
 
 Tinytest.add("Router reactivity", function(test) {

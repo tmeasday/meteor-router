@@ -22,7 +22,7 @@
       for (key in context.params)
         args.push(context.params[key]);
       
-      self._page = self._applyFilters(pageFn.call(context, args));
+      self._page = self._applyFilters(pageFn.apply(context, args));
       self.listeners.invalidateAll();
     })
   }
