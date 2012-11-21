@@ -23,7 +23,12 @@ Tinytest.add("Router reactivity", function(test) {
   Meteor.Router.resetFilters();
   Meteor.Router.add({
     '/foo': 'foo',
-    '/bar': 'bar'
+    '/bar': 'bar',
+    '/bar/2': function() {
+      // do something unrelated
+      Session.set('router-test-page', 2);
+      return 'bar';
+    }
   })
   
   Meteor.autorun(function() {
@@ -38,6 +43,11 @@ Tinytest.add("Router reactivity", function(test) {
   test.equal(context_called, 2);
   
   Meteor.Router.to('/bar')
+  Meteor.flush()
+  test.equal(context_called, 3);
+  
+  // returns 'bar' to shouldn't trigger reactivity
+  Meteor.Router.to('/bar/2')
   Meteor.flush()
   test.equal(context_called, 3);
 });

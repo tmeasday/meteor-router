@@ -22,8 +22,11 @@
       for (key in context.params)
         args.push(context.params[key]);
       
+      var oldPage = self._page;
       self._page = self._applyFilters(pageFn.apply(context, args));
-      self.listeners.invalidateAll();
+      
+      // no need to invalidate if .page() hasn't changed
+      (oldPage !== self._page) && self.listeners.invalidateAll();
     })
   }
   
