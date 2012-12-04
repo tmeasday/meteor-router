@@ -33,6 +33,12 @@
   Router.prototype.add = function(routesMap) {
     var self = this;
     
+    if (! _.isObject(routesMap)) {
+      var map = {};
+      map[routesMap] = arguments[1];
+      return self.add(map);
+    }
+    
     _.each(_.keys(routesMap), function(path) {
       var endpoint = routesMap[path];
       if (! _.isFunction(endpoint)) {

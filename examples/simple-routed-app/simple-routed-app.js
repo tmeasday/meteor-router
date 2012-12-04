@@ -50,3 +50,9 @@ if (Meteor.is_client) {
     id: function() { return Session.get('postId'); }
   })
 }
+
+if (Meteor.isServer) {
+  Meteor.Router.add(
+    '/test-endpoint', 'SOME DATA!'
+  )
+}

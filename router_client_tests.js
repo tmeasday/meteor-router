@@ -79,9 +79,7 @@ Tinytest.add("Router filtering", function(test) {
 
 Tinytest.add("FilteredRouter filter reactivity", function(test) {
   Meteor.Router.resetFilters();
-  Meteor.Router.add({
-    '/foo': 'foo'
-  });
+  Meteor.Router.add('/foo', 'foo');
   
   Meteor.Router.filters({
     'something_else': function(page) {

@@ -92,6 +92,18 @@ Meteor.Router.filter('checkLoggedIn', {except: 'home'});
 
 Note that filters build on reactivity. So the URL will not change but the user will see different pages as the state of the `Meteor.user()` property changes.
 
+### Server Side Routing
+
+The router also allows a very simple server side routing function with a similar API:
+
+```js
+Meteor.Router.add('/posts/:id.xml', function(id) {
+  return constructXMLForId(id);
+});
+```
+
+**NOTE**: Spark (meteor's template engine) does not currently run server side, so you are limited in what you can return here. Most likely you will want to return fairly simple things like JSON or XML documents, the construction of which is up to you.
+
 ###Examples
 
 Check out `examples/simple-routed-app` for an extremely simple example of a filtered routed app. (To run, use meteorite: `cd examples/simple-routed-app; mrt run`).
