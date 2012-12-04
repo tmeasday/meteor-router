@@ -157,12 +157,16 @@
   __meteor_bootstrap__.app
     .use(connect.query()) // <- XXX: we can probably assume accounts did this
     .use(function(req, res, next) {
-      var output = Meteor.Router.match(req, res);
+      // need to wrap in a fiber in case they do something async 
+      // (e.g. in the database)
+      Fiber(function() {
+        var output = Meteor.Router.match(req, res);
       
-      if (output !== false)
-        return res.end(output)
-      else
-        return next();
+        if (output !== false)
+          return res.end(output)
+        else
+          return next();
+      }).run();
     });
 
 }())

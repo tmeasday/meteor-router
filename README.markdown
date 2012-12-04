@@ -98,7 +98,7 @@ The router also allows a very simple server side routing function with a similar
 
 ```js
 Meteor.Router.add('/posts/:id.xml', function(id) {
-  return constructXMLForId(id);
+  return constructXMLForId(Posts.findOne(id));
 });
 ```
 

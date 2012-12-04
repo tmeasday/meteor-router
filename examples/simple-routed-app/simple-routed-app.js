@@ -52,7 +52,22 @@ if (Meteor.is_client) {
 }
 
 if (Meteor.isServer) {
-  Meteor.Router.add(
-    '/test-endpoint', 'SOME DATA!'
-  )
+  // don't actually publish this
+  var Posts = new Meteor.Collection('posts');
+  Meteor.startup(function() {
+    if (Posts.find().count() === 0) {
+      console.log('added Post: ' + Posts.insert({foo: 'bar'}));
+    }
+    
+    
+    Meteor.Router.add(
+      '/test-endpoint', 'SOME DATA!'
+    )
+  
+    Meteor.Router.add({
+      '/posts/:id.xml': function(id) {
+        return Posts.findOne(id).foo;
+      }
+    });
+  });
 }
