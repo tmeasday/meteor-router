@@ -102,6 +102,13 @@ Meteor.Router.add('/posts/:id.xml', function(id) {
 });
 ```
 
+The arguments to the routing function are the parameters you've specified in your URL, and the `this` within the function is an object with three properties:
+  - `this.params` -- the list of parameters, page.js style
+  - `this.request` -- a [connect](http://www.senchalabs.org/connect/) request
+  - `this.response` -- a connect response (use this to e.g. set headers on your response).
+
+Your routing function should return a string which will form the body of the response. (You can just provide a string rather than a function if it's fixed).
+
 **NOTE**: Spark (meteor's template engine) does not currently run server side, so you are limited in what you can return here. Most likely you will want to return fairly simple things like JSON or XML documents, the construction of which is up to you.
 
 ###Examples
