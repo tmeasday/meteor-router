@@ -21,14 +21,31 @@ Tinytest.add("Router.serve with params", function(test) {
 });
 
 
-Tinytest.add("Router.serve change headers", function(test) {
-  Meteor.Router.add('/baz', function() {
-    this.response.setHeader('x-my-header', 'Baz');
-    return 'data';
-  })
+Tinytest.add("Router.serve various response types", function(test) {
+  Meteor.Router.add({
+    '/baz-1': [404, {'x-my-header': 'Baz'}, 'data'],
+    '/baz-2': [405, 'data'],
+    '/baz-3': ['data'],
+    '/baz-4': 406,
+    '/baz-5': 'data'
+  });
   
-  var resp = Meteor.http.get('http://localhost:3000/baz')
+  var resp = Meteor.http.get('http://localhost:3000/baz-1')
+  test.equal(resp.statusCode, 404);
   test.equal(resp.content, 'data');
   test.equal(resp.headers['x-my-header'], 'Baz');
+  
+  var resp = Meteor.http.get('http://localhost:3000/baz-2')
+  test.equal(resp.statusCode, 405);
+  test.equal(resp.content, 'data');
+  
+  var resp = Meteor.http.get('http://localhost:3000/baz-3')
+  test.equal(resp.content, 'data');
+  
+  var resp = Meteor.http.get('http://localhost:3000/baz-4')
+  test.equal(resp.statusCode, 406);
+  
+  var resp = Meteor.http.get('http://localhost:3000/baz-5')
+  test.equal(resp.content, 'data');
 });
 

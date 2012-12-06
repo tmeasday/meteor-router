@@ -107,7 +107,21 @@ The arguments to the routing function are the parameters you've specified in you
   - `this.request` -- a [connect](http://www.senchalabs.org/connect/) request
   - `this.response` -- a connect response (use this to e.g. set headers on your response).
 
-Your routing function should return a string which will form the body of the response. (You can just provide a string rather than a function if it's fixed).
+Your routing function can return one of the following:
+  - a string, the body of the response
+  - a number, the http status code
+  - an array, consisting of one of:
+    - `[body]`
+    - `[statusCode, body]`
+    - `[statusCode, headers, body]`
+    
+  headers should be an hash of header name -> value.
+
+Alternatively, rather than a routing function, you can just provide a fixed response:
+
+```js
+Meteor.Router.add('/404', [404, "There's nothing here!"]);
+```
 
 **NOTE**: Spark (meteor's template engine) does not currently run server side, so you are limited in what you can return here. Most likely you will want to return fairly simple things like JSON or XML documents, the construction of which is up to you.
 

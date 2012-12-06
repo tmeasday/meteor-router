@@ -161,11 +161,36 @@
       // (e.g. in the database)
       Fiber(function() {
         var output = Meteor.Router.match(req, res);
-      
-        if (output !== false)
-          return res.end(output)
-        else
+        
+        if (output === false) {
           return next();
+        } else {
+          // parse out the various type of response we can have
+          
+          // array can be
+          // [content], [status, content], [status, headers, content]
+          if (_.isArray(output)) {
+            if (output.length === 3) {
+              var headers = output.splice(1, 1)[0];
+              _.each(headers, function(value, key) {
+                res.setHeader(key, value);
+              });
+            }
+            
+            if (output.length === 2) {
+              res.statusCode = output.shift();
+            }
+
+            output = output[0];
+          }
+          
+          if (_.isNumber(output)) {
+            res.statusCode = output;
+            output = '';
+          }
+          
+          return res.end(output);
+        }
       }).run();
     });
 
