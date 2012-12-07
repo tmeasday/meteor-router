@@ -6,9 +6,16 @@ Tinytest.add("Simple Router.serve", function(test) {
     return 'data';
   });
   
+  Meteor.Router.add(/page\/(\d+)/, function(number) {
+    return [number, 'page'];
+  });
   
   var resp = Meteor.http.get('http://localhost:3000/foo')
   test.equal(resp.content, 'data');
+  
+  var resp = Meteor.http.get('http://localhost:3000/page/7')
+  test.equal(resp.statusCode, 7);
+  test.equal(resp.content, 'page');
 });
 
 Tinytest.add("Router.serve with params", function(test) {

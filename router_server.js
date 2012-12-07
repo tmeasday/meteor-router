@@ -112,28 +112,24 @@
   };
   
   // simply match this path to this function
-  Router.prototype.add = function(routesMap)  {
+  Router.prototype.add = function(path, endpoint)  {
     var self = this;
     
-    if (! _.isObject(routesMap)) {
-      var map = {};
-      map[routesMap] = arguments[1];
-      return self.add(map);
-    }
-    
-    _.each(_.keys(routesMap), function(path) {
-      var endpoint = routesMap[path];
+    if (_.isObject(path) && ! _.isRegExp(path)) {
+      _.each(path, function(endpoint, p) {
+        self.add(p, endpoint);
+      });
+    } else {
       if (! _.isFunction(endpoint)) {
         endpoint = _.bind(_.identity, null, endpoint);
       }
-      
       self._routes.push([new Route(path), endpoint]);
-    });
+    }
   }
   
   Router.prototype.match = function(request, response) {
     for (var i = 0; i < this._routes.length; i++) {
-      var params = {}, route = this._routes[i];
+      var params = [], route = this._routes[i];
       
       if (route[0].match(request.url, params)) {
         context = {request: request, response: response, params: params}

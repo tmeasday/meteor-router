@@ -7,6 +7,10 @@ Tinytest.add("Router page", function(test) {
       return 'bar';
     }
   });
+  Meteor.Router.add(/page\/(\d+)/, function(number) {
+    Session.set('pageNo', number);
+    return 'page';
+  });
   
   test.equal(Meteor.Router.page(), null);
   
@@ -16,6 +20,10 @@ Tinytest.add("Router page", function(test) {
   Meteor.Router.to('/bar/1');
   test.equal(Meteor.Router.page(), 'bar');
   test.equal(Session.get('id'), '1');
+  
+  Meteor.Router.to('/page/7');
+  test.equal(Meteor.Router.page(), 'page');
+  test.equal(Session.get('pageNo'), '7');
 });
 
 Tinytest.add("Router reactivity", function(test) {
