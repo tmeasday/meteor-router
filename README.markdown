@@ -75,7 +75,7 @@ Meteor.Router.filters({
     } else {
       return 'signin';
     }
-  });
+  }
 });
 ```
 
