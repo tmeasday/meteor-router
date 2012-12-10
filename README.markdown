@@ -90,6 +90,7 @@ Meteor.Router.filter('checkLoggedIn', {only: 'profile'});
 Meteor.Router.filter('checkLoggedIn', {except: 'home'});
 
 // accepts an array of pages
+Meteor.Router.filter('checkLoggedIn', {only: ['profile', 'notifications'] });
 Meteor.Router.filter('checkLoggedIn', {except: ['home', 'browse'] });
 ```
 
