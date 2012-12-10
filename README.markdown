@@ -88,6 +88,9 @@ Meteor.Router.filter('checkLoggedIn');
 // applies to specific pages
 Meteor.Router.filter('checkLoggedIn', {only: 'profile'});
 Meteor.Router.filter('checkLoggedIn', {except: 'home'});
+
+// accepts an array of pages
+Meteor.Router.filter('checkLoggedIn', {except: ['home', 'browse'] });
 ```
 
 Note that filters build on reactivity. So the URL will not change but the user will see different pages as the state of the `Meteor.user()` property changes.
