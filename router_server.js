@@ -152,6 +152,7 @@
   var connect = __meteor_bootstrap__.require("connect");
   __meteor_bootstrap__.app
     .use(connect.query()) // <- XXX: we can probably assume accounts did this
+    .use(connect.bodyParser())
     .use(function(req, res, next) {
       // need to wrap in a fiber in case they do something async 
       // (e.g. in the database)

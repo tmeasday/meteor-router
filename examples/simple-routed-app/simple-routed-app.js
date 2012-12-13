@@ -60,9 +60,13 @@ if (Meteor.isServer) {
     }
     
     
-    Meteor.Router.add(
-      '/test-endpoint', 'SOME DATA!'
-    )
+    Meteor.Router.add({
+      '/test-endpoint': 'SOME DATA!',
+      '/second-test-endpoint': function() {
+        console.log(this.request.body);
+        return 'foo';
+      }
+    })
   
     Meteor.Router.add({
       '/posts/:id.xml': function(id) {
