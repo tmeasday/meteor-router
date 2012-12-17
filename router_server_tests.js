@@ -56,3 +56,17 @@ Tinytest.add("Router.serve various response types", function(test) {
   test.equal(resp.content, 'data');
 });
 
+
+Tinytest.add("Router.serve with futures", function(test) {
+  Meteor.Router.add('/delayed', function() {
+    var fut = new Future();
+    setTimeout(function() {
+      fut.ret('foo-in-timeout');
+    }, 1);
+        
+    return fut.wait();
+  });
+  
+  var resp = Meteor.http.get('http://localhost:3000/delayed')
+  test.equal(resp.content, 'foo-in-timeout');
+});
