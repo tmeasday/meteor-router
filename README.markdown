@@ -66,12 +66,10 @@ The current system of filtering in this package is the equivalent of an `after_f
 ```js
 Meteor.Router.filters({
   'checkLoggedIn': function(page) {
-    if (Meteor.user()) {
-      if (Meteor.user().loading) {
-        return 'loading';
-      } else {
-        return page;
-      }
+    if (Meteor.loggingIn()) {
+      return 'loading';
+    } else if (Meteor.user()) {
+      return page;
     } else {
       return 'signin';
     }
