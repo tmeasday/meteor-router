@@ -30,7 +30,9 @@ Meteor.Router.add({
     } else {
       return 'aboutThem';
     }
-  }
+  },
+  
+  '*': 'not_found'
 });
 ```
 
