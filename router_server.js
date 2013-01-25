@@ -167,6 +167,9 @@
           // array can be
           // [content], [status, content], [status, headers, content]
           if (_.isArray(output)) {
+            // copy the array so we aren't actually modifying it!
+            output = output.slice(0);
+            
             if (output.length === 3) {
               var headers = output.splice(1, 1)[0];
               _.each(headers, function(value, key) {
