@@ -6,7 +6,6 @@
   "version": "0.3.4",
   "git": "https://github.com/tmeasday/meteor-router.git",
   "packages": {
-    "HTML5-History-API": {"git": "https://github.com/tmeasday/meteor-HTML5-History-API.git"},
-    "page-js": {}
+    "page-js": {"git": "https://github.com/tmeasday/meteor-page-js-ie-support.git"}
   }
 }
