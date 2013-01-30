@@ -7,7 +7,7 @@ Meteor Router builds on [page.js](https://github.com/visionmedia/page.js) to pro
 Meteor Router can be installed with [Meteorite](https://github.com/oortcloud/meteorite/). From inside a Meteorite-managed app:
 
 ``` sh
-$ mtr add router
+$ mrt add router
 ```
 
 ## API
