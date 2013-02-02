@@ -4,7 +4,7 @@
   // Copyright (c) 2012 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
   //
   /**
-   * Initialize `Route` with the given HTTP `path`,
+   * Initialize `Route` with the given HTTP `path`, HTTP `method`,
    * and an array of `callbacks` and `options`.
    *
    * Options:
@@ -13,14 +13,15 @@
    *   - `strict`       enable strict matching for trailing slashes
    *
    * @param {String} path
+   * @param {String} method
    * @param {Object} options.
    * @api private
    */
 
-  function Route(path, options) {
+  function Route(path, method, options) {
     options = options || {};
     this.path = path;
-    this.method = 'GET';
+    this.method = method;
     this.regexp = pathtoRegexp(path
       , this.keys = []
       , options.sensitive
@@ -28,20 +29,25 @@
   }
 
   /**
-   * Check if this route matches `path`, if so
+   * Check if this route matches `path` and optional `method`, if so
    * populate `params`.
    *
    * @param {String} path
+   * @param {String} method
    * @param {Array} params
    * @return {Boolean}
    * @api private
    */
 
-  Route.prototype.match = function(path, params){
-    var keys = this.keys
-      , qsIndex = path.indexOf('?')
-      , pathname = ~qsIndex ? path.slice(0, qsIndex) : path
-      , m = this.regexp.exec(pathname);
+  Route.prototype.match = function(path, method, params){
+    var keys, qsIndex, pathname, m;
+    
+    if (this.method && this.method.toUpperCase() !== method) return false;
+
+    keys = this.keys;
+    qsIndex = path.indexOf('?');
+    pathname = ~qsIndex ? path.slice(0, qsIndex) : path;
+    m = this.regexp.exec(pathname);
   
     if (!m) return false;
 
@@ -112,7 +118,7 @@
   };
   
   // simply match this path to this function
-  Router.prototype.add = function(path, endpoint)  {
+  Router.prototype.add = function(path, method, endpoint)  {
     var self = this;
     
     if (_.isObject(path) && ! _.isRegExp(path)) {
@@ -120,10 +126,15 @@
         self.add(p, endpoint);
       });
     } else {
+      if (! endpoint) {
+        // no http method was supplied so 2nd parameter is the endpoint
+        endpoint = method;
+        method = null;
+      }
       if (! _.isFunction(endpoint)) {
         endpoint = _.bind(_.identity, null, endpoint);
       }
-      self._routes.push([new Route(path), endpoint]);
+      self._routes.push([new Route(path, method), endpoint]);
     }
   }
   
@@ -131,7 +142,7 @@
     for (var i = 0; i < this._routes.length; i++) {
       var params = [], route = this._routes[i];
       
-      if (route[0].match(request.url, params)) {
+      if (route[0].match(request.url, request.method, params)) {
         context = {request: request, response: response, params: params}
         
         var args = [];
