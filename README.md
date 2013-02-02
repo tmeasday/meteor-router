@@ -114,6 +114,18 @@ Meteor.Router.add('/posts/:id.xml', function(id) {
 });
 ```
 
+Optionally you can also restrict the route by HTTP method:
+
+``` javascript
+Meteor.Router.add('/posts/:id.xml', 'GET', function(id) {
+  return constructXMLForId(Posts.findOne(id));
+});
+Meteor.Router.add('/posts/:id.xml', 'DELETE', function(id) {
+  Posts.remove(id);
+  return [204, 'No Content'];
+});
+```
+
 The arguments to the routing function are the parameters you've specified in your URL, and the `this` within the function is an object with three properties:
 
 * `this.params` -- the list of parameters, page.js style
