@@ -17,7 +17,7 @@
       "page-js": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
         "branch": "master",
-        "commit": "d396faf2ae8a6d66ba0bf165ef3271b7df4410b9"
+        "commit": "10946edeefb8b40c351bd5ce6c3a18665a05c623"
       },
       "HTML5-History-API": {
         "git": "https://github.com/tmeasday/meteor-HTML5-History-API.git",
