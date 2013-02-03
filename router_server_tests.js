@@ -77,3 +77,25 @@ Tinytest.add("Router.serve with futures", function(test) {
   var resp = Meteor.http.get('http://localhost:3000/server/delayed')
   test.equal(resp.content, 'foo-in-timeout');
 });
+
+
+Tinytest.add("Router.serve without http method restriction", function(test) {
+  Meteor.Router.add('/bat-1', 'data');
+  var resp = Meteor.http.get('http://localhost:3000/bat-1');
+  test.equal(resp.content, 'data');
+  var resp = Meteor.http.post('http://localhost:3000/bat-1');
+  test.equal(resp.content, 'data');
+});
+
+
+Tinytest.add("Router.serve with http method restriction", function(test) {
+  Meteor.Router.add('/bat-2', 'GET', 'data');
+  Meteor.Router.add('/bat-2', 'POST', 'postdata');
+  var resp = Meteor.http.get('http://localhost:3000/bat-2');
+  test.equal(resp.content, 'data');
+  var resp = Meteor.http.post('http://localhost:3000/bat-2');
+  test.equal(resp.content, 'postdata');
+  var resp = Meteor.http.put('http://localhost:3000/bat-2');
+  test.notEqual(resp.content, 'postdata');
+  test.notEqual(resp.content, 'data');
+});
