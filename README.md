@@ -157,7 +157,7 @@ Additionally, you might want to read [my blog post](http://bindle.me/blog/index.
 
 ## Internet explorer 8+ support
 
-The current version of the router doesn't support IE8 + 9. An updating is coming soon. In the meantime, if you absolutely need it, you can use the `ie-support` branch:
+The current version of the router doesn't support IE8 + 9. An [update is coming soon](#33). In the meantime, if you absolutely need it, you can use the `ie-support` branch:
 ```json
 "packages": {
   "HTML5-History-API": {},
