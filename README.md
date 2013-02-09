@@ -155,6 +155,20 @@ Check out `examples/simple-routed-app` for an extremely simple example of a filt
 
 Additionally, you might want to read [my blog post](http://bindle.me/blog/index.php/679/page-transitions-in-meteor-getleague-com) on page transitions in Meteor.
 
+## Internet explorer 8+ support
+
+The current version of the router doesn't support IE8 + 9. An updating is coming soon. In the meantime, if you absolutely need it, you can use the `ie-support` branch:
+```json
+"packages": {
+  "HTML5-History-API": {},
+  "router": {
+    "git": "https://github.com/tmeasday/meteor-router.git",
+    "branch": "ie-support"
+  }
+}
+```
+
+
 ## Contributing
 
 To run the tests, ensure that the router is checked out to a folder called `router`, and then simply run:
