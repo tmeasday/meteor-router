@@ -2,7 +2,7 @@
   "meteor": {
     "git": "https://github.com/meteor/meteor.git",
     "branch": "master",
-    "commit": "68dafc94c5f1eb6cf2350ee74e9f65130f665bc5"
+    "commit": "4d98d8cb4e5a95e9e98953f44c872c9332a042a3"
   },
   "dependencies": {
     "basePackages": {
@@ -16,8 +16,8 @@
       },
       "page-js": {
         "git": "https://github.com/tmeasday/meteor-page-js.git",
-        "tag": "v1.3.1",
-        "commit": "ee0b651869928abe50b5d06d7f32ccd2e657883a"
+        "tag": "v1.3.5",
+        "commit": "c652f795a86498aa4609ab637a694710421cb218"
       }
     }
   }
