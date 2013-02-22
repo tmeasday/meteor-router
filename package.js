@@ -5,6 +5,7 @@ Package.describe({
 Package.on_use(function (api, where) {
   api.use('deps', 'client');
   api.use('startup', 'client');
+  api.use('HTML5-History-API', 'client');
   api.use('page-js', 'client');
   api.use('underscore', ['client', 'server']);
   
