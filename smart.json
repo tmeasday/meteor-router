@@ -6,6 +6,6 @@
   "version": "0.3.4",
   "git": "https://github.com/tmeasday/meteor-router.git",
   "packages": {
-    "page-js": {"git": "https://github.com/tmeasday/meteor-page-js-ie-support.git"}
+    "page-js-ie-support": {}
   }
 }
