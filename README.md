@@ -157,14 +157,11 @@ Additionally, you might want to read [my blog post](http://bindle.me/blog/index.
 
 ## Internet explorer 8+ support
 
-The current version of the router doesn't support IE8 + 9. An [update is coming soon](https://github.com/tmeasday/meteor-router/issues/33). In the meantime, if you absolutely need it, you can use the `ie-support` branch:
+If you want the router to work in older version of Internet Explorer that don't support pushState, you can use the [HTML5-History-API](https://github.com/devote/HTML5-History-API) polyfill:
 ```json
 "packages": {
   "HTML5-History-API": {},
-  "router": {
-    "git": "https://github.com/tmeasday/meteor-router.git",
-    "branch": "ie-support"
-  }
+  "router": {}
 }
 ```
 
