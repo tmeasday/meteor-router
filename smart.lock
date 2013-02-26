@@ -16,8 +16,8 @@
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
-        "tag": "v1.3.4",
-        "commit": "5031de09f0cee401f4caffbfc4a9c9ed6f86fb46"
+        "tag": "v1.3.5",
+        "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
       }
     }
   }

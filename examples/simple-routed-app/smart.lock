@@ -14,16 +14,16 @@
     "packages": {
       "HTML5-History-API": {
         "git": "https://github.com/tmeasday/meteor-HTML5-History-API.git",
-        "tag": "v0.1.1",
-        "commit": "05f29877a6b2c7e34e3bb2a031bc09380f748fdb"
+        "tag": "v0.1.2",
+        "commit": "72333bfa71ae1ca75243085e83200eef40818088"
       },
       "router": {
         "path": "../.."
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
-        "tag": "v1.3.4",
-        "commit": "5031de09f0cee401f4caffbfc4a9c9ed6f86fb46"
+        "tag": "v1.3.5",
+        "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
       }
     }
   }
