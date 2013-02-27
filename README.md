@@ -158,11 +158,8 @@ Additionally, you might want to read [my blog post](http://bindle.me/blog/index.
 ## Internet explorer 8+ support
 
 If you want the router to work in older version of Internet Explorer that don't support pushState, you can use the [HTML5-History-API](https://github.com/devote/HTML5-History-API) polyfill:
-```json
-"packages": {
-  "HTML5-History-API": {},
-  "router": {}
-}
+```bash
+  mrt add HTML5-History-API
 ```
 
 
