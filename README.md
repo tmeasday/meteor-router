@@ -162,6 +162,8 @@ If you want the router to work in older version of Internet Explorer that don't 
   mrt add HTML5-History-API
 ```
 
+**NOTE**: Either do this before adding the router, or edit your app's `.meteor/packages` file to make sure it's listed before the router. This is a limitation that I'm working on.
+
 
 ## Contributing
 
