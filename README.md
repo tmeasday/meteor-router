@@ -28,6 +28,7 @@ This is a reactive variable which will trigger invalidations as the app changes 
 
 To define a route, simply specify the URL it matches and the name of the template it should render. If you want to get fancy, you can specify a reactive function that returns a template name. It will get repeatedly executed as its reactive dependencies change.
 
+Be careful not to specify your routes inside the ```Meteor.startup``` function, or the routing won't work for the first load.
 ``` javascript
 Meteor.Router.add({
   '/news': 'news',
