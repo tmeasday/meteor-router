@@ -8,9 +8,10 @@ Package.on_use(function (api, where) {
   api.use('page-js-ie-support', 'client');
   api.use('underscore', ['client', 'server']);
   
-  api.add_files('router_client.js', 'client');
-  api.add_files('router_helpers.js', 'client');
-  api.add_files('router_server.js', 'server');
+  api.add_files('lib/router_client.js', 'client');
+  api.add_files('lib/router_helpers.js', 'client');
+  api.add_files('lib/router_server.js', 'server');
+  api.add_files('lib/router_common.js', ['client', 'server'])
 });
 
 
@@ -20,8 +21,8 @@ Package.on_test(function (api) {
   api.use('tinytest', ['client', 'server']);
   
   api.use('session', 'client');
-  api.add_files('router_client_tests.js', 'client');
+  api.add_files('tests/router_client_tests.js', 'client');
   
   api.use('http', 'server');
-  api.add_files('router_server_tests.js', 'server');
+  api.add_files('tests/router_server_tests.js', 'server');
 });
