@@ -5,6 +5,9 @@
   "author": "Tom Coleman <tom@thesnail.org>",
   "version": "0.4.2",
   "git": "https://github.com/tmeasday/meteor-router.git",
+  "meteor": {
+    "branch": "release-0.5.9"
+  },
   "packages": {
     "page-js-ie-support": {}
   }

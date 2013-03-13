@@ -4,7 +4,7 @@
     this._autorunHandle = null;
     this._filters = {};
     this._activeFilters = [];
-    this.listeners = new Meteor.deps._ContextSet();
+    this._pageDeps = new Deps.Dependency();
   }
   
   // internal, don't use
@@ -17,7 +17,7 @@
     // the routing function getting called multiple times, which could be
     // unexpected if it has side effects. This is essentially a memoize pattern
     self._autorunHandle && self._autorunHandle.stop();
-    self._autorunHandle = Meteor.autorun(function() {
+    self._autorunHandle = Deps.autorun(function() {
       var args = [];
       for (key in context.params)
         args.push(context.params[key]);
@@ -26,7 +26,7 @@
       self._page = self._applyFilters(pageFn.apply(context, args));
       
       // no need to invalidate if .page() hasn't changed
-      (oldPage !== self._page) && self.listeners.invalidateAll();
+      (oldPage !== self._page) && self._pageDeps.changed();
     })
   }
   
@@ -46,7 +46,7 @@
   }
   
   Router.prototype.page = function() {
-    this.listeners.addCurrentContext();
+    Deps.depend(this._pageDeps);
     return this._page;
   }
   

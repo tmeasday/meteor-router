@@ -1,4 +1,7 @@
 {
+  "meteor": {
+    "branch": "release-0.5.9"
+  },
   "packages": {
     "HTML5-History-API": {},
     "router": {"path": "../.."}
