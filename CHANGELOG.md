@@ -1,3 +1,6 @@
+- 0.4.3 - 14-03-2013
+  Updated to work with Meteor version 0.5.8
+
 - 0.4.0 - 26-02-2013
   Added IE support via the HTML5-History-API polyfill and a patched page.js
 
