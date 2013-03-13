@@ -10,6 +10,8 @@ Meteor Router can be installed with [Meteorite](https://github.com/oortcloud/met
 $ mrt add router
 ```
 
+Note that Router version 0.4.3 works with Meteor 0.5.9 and later, and 0.4.2 works with Meteor 0.5.8 and earlier.
+
 ## API
 
 ### Basics
