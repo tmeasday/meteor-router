@@ -109,3 +109,17 @@ Tinytest.add("FilteredRouter filter reactivity", function(test) {
   Meteor.flush();
   test.equal(Meteor.Router.page(), 'something_else');
 });
+
+Tinytest.add("Router before routing", function(test) {
+  var beforeCalled = false;
+  
+  Meteor.Router.resetFilters();
+  Meteor.Router.add('/before', 'before');
+  Meteor.Router.beforeRouting = function() {
+    beforeCalled = true;
+  }
+  
+  test.equal(beforeCalled, false);
+  Meteor.Router.to('/before');
+  test.equal(beforeCalled, true);
+});

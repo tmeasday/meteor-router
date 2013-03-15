@@ -18,6 +18,8 @@
     // unexpected if it has side effects. This is essentially a memoize pattern
     self._autorunHandle && self._autorunHandle.stop();
     self._autorunHandle = Deps.autorun(function() {
+      self.beforeRouting(context);
+      
       var args = [];
       for (key in context.params)
         args.push(context.params[key]);
@@ -117,6 +119,9 @@
     }
   }
   
+  // set this to have a function run before each and every route.
+  // - the callback should take a context argument
+  Router.prototype.beforeRouting = function() {};
   
   Meteor.Router = new Router();
   Meteor.startup(function() { page(); });
