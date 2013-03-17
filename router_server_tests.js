@@ -10,10 +10,10 @@ Tinytest.add("Simple Router.serve", function(test) {
     return [number, 'page'];
   });
 
-  var resp = Meteor.http.get('http://localhost:3000/server/foo')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/foo'));
   test.equal(resp.content, 'data');
 
-  var resp = Meteor.http.get('http://localhost:3000/server/page/7')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/page/7'));
   test.equal(resp.statusCode, 7);
   test.equal(resp.content, 'page');
 });
@@ -23,7 +23,7 @@ Tinytest.add("Router.serve with params", function(test) {
     return id;
   })
 
-  var resp = Meteor.http.get('http://localhost:3000/server/bar/content.xml')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/bar/content.xml'));
   test.equal(resp.content, 'content');
 });
 
@@ -37,28 +37,28 @@ Tinytest.add("Router.serve various response types", function(test) {
     '/server/baz-5': 'data'
   });
 
-  var resp = Meteor.http.get('http://localhost:3000/server/baz-1')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-1'));
   test.equal(resp.statusCode, 404);
   test.equal(resp.content, 'data');
   test.equal(resp.headers['x-my-header'], 'Baz');
 
   // grab it again to make sure we aren't messing with it
-  var resp = Meteor.http.get('http://localhost:3000/server/baz-1')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-1'));
   test.equal(resp.statusCode, 404);
   test.equal(resp.content, 'data');
   test.equal(resp.headers['x-my-header'], 'Baz');
 
-  var resp = Meteor.http.get('http://localhost:3000/server/baz-2')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-2'));
   test.equal(resp.statusCode, 405);
   test.equal(resp.content, 'data');
 
-  var resp = Meteor.http.get('http://localhost:3000/server/baz-3')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-3'));
   test.equal(resp.content, 'data');
 
-  var resp = Meteor.http.get('http://localhost:3000/server/baz-4')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-4'));
   test.equal(resp.statusCode, 406);
 
-  var resp = Meteor.http.get('http://localhost:3000/server/baz-5')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-5'));
   test.equal(resp.content, 'data');
 });
 
@@ -74,16 +74,16 @@ Tinytest.add("Router.serve with futures", function(test) {
     return fut.wait();
   });
 
-  var resp = Meteor.http.get('http://localhost:3000/server/delayed')
+  var resp = Meteor.http.get(Meteor.absoluteUrl('server/delayed'));
   test.equal(resp.content, 'foo-in-timeout');
 });
 
 
 Tinytest.add("Router.serve without http method restriction", function(test) {
   Meteor.Router.add('/bat-1', 'data');
-  var resp = Meteor.http.get('http://localhost:3000/bat-1');
+  var resp = Meteor.http.get(Meteor.absoluteUrl('bat-1'));
   test.equal(resp.content, 'data');
-  var resp = Meteor.http.post('http://localhost:3000/bat-1');
+  var resp = Meteor.http.post(Meteor.absoluteUrl('bat-1'));
   test.equal(resp.content, 'data');
 });
 
@@ -91,11 +91,11 @@ Tinytest.add("Router.serve without http method restriction", function(test) {
 Tinytest.add("Router.serve with http method restriction", function(test) {
   Meteor.Router.add('/bat-2', 'GET', 'data');
   Meteor.Router.add('/bat-2', 'POST', 'postdata');
-  var resp = Meteor.http.get('http://localhost:3000/bat-2');
+  var resp = Meteor.http.get(Meteor.absoluteUrl('bat-2'));
   test.equal(resp.content, 'data');
-  var resp = Meteor.http.post('http://localhost:3000/bat-2');
+  var resp = Meteor.http.post(Meteor.absoluteUrl('bat-2'));
   test.equal(resp.content, 'postdata');
-  var resp = Meteor.http.put('http://localhost:3000/bat-2');
+  var resp = Meteor.http.put(Meteor.absoluteUrl('bat-2'));
   test.notEqual(resp.content, 'postdata');
   test.notEqual(resp.content, 'data');
 });
