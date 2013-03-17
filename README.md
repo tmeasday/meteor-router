@@ -74,7 +74,7 @@ Meteor.Router.add({
 
 ### Filtering
 
-The current system of filtering in this package is the equivalent of an `after\_filter` in Rails. To add a filter which will render the correct template for a page which requires login:
+The current system of filtering in this package is the equivalent of an `after_filter` in Rails. To add a filter which will render the correct template for a page which requires login:
 
 ``` javascript
 Meteor.Router.filters({
