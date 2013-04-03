@@ -25,4 +25,6 @@ Package.on_test(function (api) {
   
   api.use('http', 'server');
   api.add_files('tests/router_server_tests.js', 'server');
+  
+  api.add_files('tests/router_common_tests.js', ['client', 'server']);
 });
