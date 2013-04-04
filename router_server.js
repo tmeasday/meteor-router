@@ -168,6 +168,8 @@
     .use(function(req, res, next) {
       // need to wrap in a fiber in case they do something async 
       // (e.g. in the database)
+      if(typeof(Fiber)=="undefined") Fiber = Npm.require('fibers');
+      
       Fiber(function() {
         var output = Meteor.Router.match(req, res);
         
