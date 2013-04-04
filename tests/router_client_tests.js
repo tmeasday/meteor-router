@@ -109,3 +109,11 @@ Tinytest.add("FilteredRouter filter reactivity", function(test) {
   Meteor.flush();
   test.equal(Meteor.Router.page(), 'something_else');
 });
+
+Tinytest.add("Router named route helpers", function(test) {
+  Meteor.Router.resetFilters();
+  Meteor.Router.add('/foo', 'foo');
+  
+  test.equal(Meteor.Router.fooPath(), '/foo');
+  test.equal(Meteor.Router.fooUrl(), Meteor.absoluteUrl('/foo'));
+})
