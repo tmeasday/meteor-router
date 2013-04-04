@@ -112,8 +112,8 @@ Tinytest.add("FilteredRouter filter reactivity", function(test) {
 
 Tinytest.add("Router named route helpers", function(test) {
   Meteor.Router.resetFilters();
-  Meteor.Router.add('/foo', 'foo');
+  Meteor.Router.add('/foo/:arg', 'named');
   
-  test.equal(Meteor.Router.fooPath(), '/foo');
-  test.equal(Meteor.Router.fooUrl(), Meteor.absoluteUrl('/foo'));
+  test.equal(Meteor.Router.namedPath({arg: 7}), '/foo/7');
+  test.equal(Meteor.Router.namedUrl(7), Meteor.absoluteUrl('foo/7'));
 })

@@ -8,7 +8,7 @@
 
 <template name="home">
   <h1>This is the example!</h1>
-  <a href="/welcome" class="welcome">Click here to go to your personalized welcome page</a>
+  <a href="{{welcomePath}}" class="welcome">Click here to go to your personalized welcome page</a>
 </template>
 
 <template name="sign_in">
@@ -28,7 +28,7 @@
     <button type="submit">Create</button>
   </form>
   <a href="" class="logout">Signout</a>
-  <a href="/" class="home">Return home</a>
+  <a href="{{homeUrl}}" class="home">Return home</a>
 </template>
 
 <template name="post">
