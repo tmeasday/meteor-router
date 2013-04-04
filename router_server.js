@@ -115,6 +115,9 @@
   
   var Router = function() {
     this._routes = [];
+    this._config = {};
+
+    _.bindAll(this, '_start');
   };
   
   // simply match this path to this function
@@ -155,55 +158,75 @@
     
     return false;
   }
-  
+
+  Router.prototype.configure = function(config){
+    if(this._started){
+      throw new Error("Router has already been started");
+    }
+
+    this._config = config;
+  };
+
+  Router.prototype._start = function(){
+    var self = this;
+    var connect = __meteor_bootstrap__.require("connect");
+
+    if(this._started){
+      throw new Error("Router has already been started");
+    }
+
+    this._started = true;
+
+    __meteor_bootstrap__.app
+      .use(connect.query()) // <- XXX: we can probably assume accounts did this
+      .use(connect.bodyParser(self._config.bodyParser))
+      .use(function(req, res, next) {
+        // need to wrap in a fiber in case they do something async 
+        // (e.g. in the database)
+        Fiber(function() {
+          var output = self.match(req, res);
+          
+          if (output === false) {
+            return next();
+          } else {
+            // parse out the various type of response we can have
+            
+            // array can be
+            // [content], [status, content], [status, headers, content]
+            if (_.isArray(output)) {
+              // copy the array so we aren't actually modifying it!
+              output = output.slice(0);
+              
+              if (output.length === 3) {
+                var headers = output.splice(1, 1)[0];
+                _.each(headers, function(value, key) {
+                  res.setHeader(key, value);
+                });
+              }
+              
+              if (output.length === 2) {
+                res.statusCode = output.shift();
+              }
+
+              output = output[0];
+            }
+            
+            if (_.isNumber(output)) {
+              res.statusCode = output;
+              output = '';
+            }
+            
+            return res.end(output);
+          }
+        }).run();
+      });
+  };
+
   // Make the router available
   Meteor.Router = new Router();
   
-  // hook up the serving
-  var connect = __meteor_bootstrap__.require("connect");
-  __meteor_bootstrap__.app
-    .use(connect.query()) // <- XXX: we can probably assume accounts did this
-    .use(connect.bodyParser())
-    .use(function(req, res, next) {
-      // need to wrap in a fiber in case they do something async 
-      // (e.g. in the database)
-      Fiber(function() {
-        var output = Meteor.Router.match(req, res);
-        
-        if (output === false) {
-          return next();
-        } else {
-          // parse out the various type of response we can have
-          
-          // array can be
-          // [content], [status, content], [status, headers, content]
-          if (_.isArray(output)) {
-            // copy the array so we aren't actually modifying it!
-            output = output.slice(0);
-            
-            if (output.length === 3) {
-              var headers = output.splice(1, 1)[0];
-              _.each(headers, function(value, key) {
-                res.setHeader(key, value);
-              });
-            }
-            
-            if (output.length === 2) {
-              res.statusCode = output.shift();
-            }
+  //Start routing when server is ready
+  Meteor.startup(Meteor.Router._start);
 
-            output = output[0];
-          }
-          
-          if (_.isNumber(output)) {
-            res.statusCode = output;
-            output = '';
-          }
-          
-          return res.end(output);
-        }
-      }).run();
-    });
-
-}())
+}());
 
