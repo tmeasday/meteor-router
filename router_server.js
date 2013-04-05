@@ -41,14 +41,14 @@
 
   Route.prototype.match = function(path, method, params){
     var keys, qsIndex, pathname, m;
-    
+
     if (this.method && this.method.toUpperCase() !== method) return false;
 
     keys = this.keys;
     qsIndex = path.indexOf('?');
     pathname = ~qsIndex ? path.slice(0, qsIndex) : path;
     m = this.regexp.exec(pathname);
-  
+
     if (!m) return false;
 
     for (var i = 1, len = m.length; i < len; ++i) {
@@ -107,18 +107,18 @@
       .replace(/([\/.])/g, '\\$1')
       .replace(/__plus__/g, '(.+)')
       .replace(/\*/g, '(.*)');
-    
+
     return new RegExp('^' + path + '$', sensitive ? '' : 'i');
-  };
-  
+  }
+
   /// END Route object
-  
+
   var Router = function() {
     this._routes = [];
     this._config = {};
     this._started = false;
   };
-  
+
   // simply match this path to this function
   Router.prototype.add = function(path, method, endpoint)  {
     var self = this;
@@ -143,25 +143,25 @@
       }
       self._routes.push([new Route(path, method), endpoint]);
     }
-  }
-  
+  };
+
   Router.prototype.match = function(request, response) {
     for (var i = 0; i < this._routes.length; i++) {
       var params = [], route = this._routes[i];
-      
+
       if (route[0].match(request.url, request.method, params)) {
-        context = {request: request, response: response, params: params}
-        
+        context = {request: request, response: response, params: params};
+
         var args = [];
-        for (key in context.params)
+        for (var key in context.params)
           args.push(context.params[key]);
-        
+
         return route[1].apply(context, args);
       }
     }
-    
+
     return false;
-  }
+  };
 
   Router.prototype.configure = function(config){
     if(this._started){
@@ -185,41 +185,41 @@
       .use(connect.query()) // <- XXX: we can probably assume accounts did this
       .use(connect.bodyParser(self._config.bodyParser))
       .use(function(req, res, next) {
-        // need to wrap in a fiber in case they do something async 
+        // need to wrap in a fiber in case they do something async
         // (e.g. in the database)
         Fiber(function() {
           var output = self.match(req, res);
-          
+
           if (output === false) {
             return next();
           } else {
             // parse out the various type of response we can have
-            
+
             // array can be
             // [content], [status, content], [status, headers, content]
             if (_.isArray(output)) {
               // copy the array so we aren't actually modifying it!
               output = output.slice(0);
-              
+
               if (output.length === 3) {
                 var headers = output.splice(1, 1)[0];
                 _.each(headers, function(value, key) {
                   res.setHeader(key, value);
                 });
               }
-              
+
               if (output.length === 2) {
                 res.statusCode = output.shift();
               }
 
               output = output[0];
             }
-            
+
             if (_.isNumber(output)) {
               res.statusCode = output;
               output = '';
             }
-            
+
             return res.end(output);
           }
         }).run();
