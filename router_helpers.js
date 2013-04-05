@@ -6,5 +6,8 @@ if (typeof Handlebars !== 'undefined') {
     if (Template[name])
       return new Handlebars.SafeString(Template[name]());
   });
-}
   
+  Handlebars.registerHelper('currentPage', function() {
+    return Meteor.Router.page();
+  });
+}
