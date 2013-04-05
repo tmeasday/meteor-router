@@ -1,1 +1,4 @@
-/* CSS declarations go here */
+header {
+  float:right;
+  font-size:small;
+}
