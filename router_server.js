@@ -116,14 +116,18 @@
   var Router = function() {
     this._routes = [];
     this._config = {};
-
-    _.bindAll(this, '_start');
+    this._started = false;
   };
   
   // simply match this path to this function
   Router.prototype.add = function(path, method, endpoint)  {
     var self = this;
-    
+
+    // Start serving on first add() call
+    if(!this.started){
+      this._start();
+    }
+
     if (_.isObject(path) && ! _.isRegExp(path)) {
       _.each(path, function(endpoint, p) {
         self.add(p, endpoint);
@@ -161,7 +165,7 @@
 
   Router.prototype.configure = function(config){
     if(this._started){
-      throw new Error("Router has already been started");
+      throw new Error("Router.configure() has to be called before first call to Router.add()");
     }
 
     this._config = config;
@@ -224,9 +228,6 @@
 
   // Make the router available
   Meteor.Router = new Router();
-  
-  //Start routing when server is ready
-  Meteor.startup(Meteor.Router._start);
 
 }());
 
