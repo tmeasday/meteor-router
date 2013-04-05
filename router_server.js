@@ -160,13 +160,16 @@
   Meteor.Router = new Router();
   
   // hook up the serving
-  var connect = __meteor_bootstrap__.require("connect");
+  var connect = (typeof(Npm) == "undefined") ? __meteor_bootstrap__.require("connect") : Npm.require("connect");
+  
   __meteor_bootstrap__.app
     .use(connect.query()) // <- XXX: we can probably assume accounts did this
     .use(connect.bodyParser())
     .use(function(req, res, next) {
       // need to wrap in a fiber in case they do something async 
       // (e.g. in the database)
+      if(typeof(Fiber)=="undefined") Fiber = Npm.require('fibers');
+      
       Fiber(function() {
         var output = Meteor.Router.match(req, res);
         

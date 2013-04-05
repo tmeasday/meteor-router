@@ -28,6 +28,12 @@ This is a reactive variable which will trigger invalidations as the app changes 
 {{renderPage}}
 ```
 
+It's common to render the inside page isolated from the layout:
+
+``` handlebars
+{{#isolate}} {{renderPage}} {{/isolate}}
+```
+
 To define a route, simply specify the URL it matches and the name of the template it should render. If you want to get fancy, you can specify a reactive function that returns a template name. It will get repeatedly executed as its reactive dependencies change.
 
 Be careful not to specify your routes inside the ```Meteor.startup``` function, or the routing won't work for the first load.
@@ -74,7 +80,7 @@ Meteor.Router.add({
 
 ### Filtering
 
-The current system of filtering in this package is the equivalent of an `after\_filter` in Rails. To add a filter which will render the correct template for a page which requires login:
+The current system of filtering in this package is the equivalent of an `after_filter` in Rails. To add a filter which will render the correct template for a page which requires login:
 
 ``` javascript
 Meteor.Router.filters({
