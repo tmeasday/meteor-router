@@ -1,3 +1,7 @@
+- 0.5.0
+  - added named routes
+  - added beforeRouting
+
 - 0.4.4 - 05-04-2013
   Updated to work with Meteor version 0.6.0 (thanks @Tarangp!)
 
