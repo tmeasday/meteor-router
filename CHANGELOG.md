@@ -1,3 +1,11 @@
+- 0.5.0
+  - added named routes
+  - added beforeRouting
+  - re-added {{currentPage}} helper (thanks @zVictor!)
+
+- 0.4.4 - 05-04-2013
+  Updated to work with Meteor version 0.6.0 (thanks @Tarangp!)
+
 - 0.4.3 - 14-03-2013
   Updated to work with Meteor version 0.5.8
 

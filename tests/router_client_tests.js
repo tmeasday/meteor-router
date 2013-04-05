@@ -109,3 +109,63 @@ Tinytest.add("FilteredRouter filter reactivity", function(test) {
   Meteor.flush();
   test.equal(Meteor.Router.page(), 'something_else');
 });
+
+Tinytest.add("Router named route helpers", function(test) {
+  Meteor.Router.resetFilters();
+  Meteor.Router.add('/named/:arg', 'named');
+  
+  test.equal(Meteor.Router.namedPath({arg: 7}), '/named/7');
+  test.equal(Meteor.Router.namedUrl(7), Meteor.absoluteUrl('named/7'));
+  
+  Meteor.Router.to('named', {arg: 7});
+  Meteor.flush();
+  test.equal(Meteor.Router.page(), 'named');
+});
+
+Tinytest.add("Router different argument formats", function(test) {
+  Meteor.Router.resetFilters();
+  Meteor.Router.add({
+    '/route1': 'page1',
+    '/route2': function() { return 'page2'; },
+    '/route3': {to: 'page3', and: function() { Session.set('foo', 'page3'); }},
+    '/route4': {to: 'page4', as: 'route4'},
+  });
+  
+  // simple one
+  Meteor.Router.to('page1');
+  Meteor.flush();
+  test.equal(Meteor.Router.page(), 'page1');
+  
+  // no named route exists
+  test.throws(function() {
+    Meteor.Router.to('page2');
+  })
+  
+  // slightly more complex
+  Meteor.Router.to('page3');
+  Meteor.flush();
+  test.equal(Meteor.Router.page(), 'page3');
+  test.equal(Session.get('foo'), 'page3');
+  
+  test.throws(function() {
+    Meteor.Router.to('page4');
+  });
+  test.equal(Meteor.Router.route4Path(), '/route4');
+  Meteor.Router.to('route4');
+  Meteor.flush();
+  test.equal(Meteor.Router.page(), 'page4');
+});
+
+Tinytest.add("Router before routing", function(test) {
+  var beforeCalled = false;
+  
+  Meteor.Router.resetFilters();
+  Meteor.Router.add('/before', 'before');
+  Meteor.Router.beforeRouting = function() {
+    beforeCalled = true;
+  }
+  
+  test.equal(beforeCalled, false);
+  Meteor.Router.to('/before');
+  test.equal(beforeCalled, true);
+});
