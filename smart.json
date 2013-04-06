@@ -3,7 +3,7 @@
   "description": "A Reactive Router for multipage apps",
   "homepage": "https://github.com/tmeasday/meteor-router",
   "author": "Tom Coleman <tom@thesnail.org>",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "git": "https://github.com/tmeasday/meteor-router.git",
   "packages": {
     "page-js-ie-support": {}
