@@ -78,6 +78,49 @@ Meteor.Router.add({
 });
 ```
 
+### Named Routes
+
+If you specify your route with simply a template name, then you'll set up a _named route_. So instead of calling `Meteor.Router.to('/news')`, you can call `Meteor.Router.to('news')` (`news` is the name of the route). Additionally, that named route sets up the following:
+
+  - `Meteor.Router.newsPath()` -- which is `/news` in this case
+  - `Meteor.Router.newsUrl()` -- which is `http://yourhost.com/news`
+  - `{{newsPath}}` and `{{newsUrl}}` -- handlebars helpers
+
+If you are using a routing function, you'll need to manually supply a route name, like so:
+
+```js
+Meteor.Router.add({
+  '/about': { as: 'about', to: function() {
+    if (Session.get('aboutUs')) {
+      return 'aboutUs';
+    } else {
+      return 'aboutThem';
+    }
+  }}
+});
+
+Meteor.Router.aboutPath(); // == '/about'
+```
+
+Additionally, you can provide a `and` property, which is a function that executes everytime the route executes (useful if your _template_ is always the same, but you want to have some side effects):
+
+
+```js
+Meteor.Router.add({
+  '/posts/:_id': { to: 'showPost', and: function(id) {
+    Session.set('currentPostId', id);
+  }}
+});
+
+Meteor.Router.showPostPath(post) // == /posts/7
+````
+
+If your URL has named matches inside it, you can either pass in an object with those properties (e.g. `post = {_id: 7}` above), or you can pass the arguments in in order (e.g. `showPostPath(7)`);
+
+### beforeRouting
+
+Use `Meteor.Router.beforeRouting = function() {}` to set a callback to run before any routing function. Useful to reset session variables.
+
 ### Filtering
 
 The current system of filtering in this package is the equivalent of an `after_filter` in Rails. To add a filter which will render the correct template for a page which requires login:
