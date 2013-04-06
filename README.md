@@ -199,6 +199,20 @@ Alternatively, rather than a routing function, you can just provide a fixed resp
 Meteor.Router.add('/404', [404, "There's nothing here!"]);
 ```
 
+The server side router adds the bodyParser middleware, enabling automatic parsing of JSON, Mutipart and URL encoded forms. You can tweak the Multipart parsing, i.e. changing the uploaded files destination directory:
+
+``` javascript
+Meteor.Router.configure({
+  bodyParser: {
+    uploadDir: 'uploads',
+    hash: 'sha1'
+  }
+});
+```
+
+The configure() call **MUST** be put before any add() call, otherwise it will throw an error.
+For more information on options available, go to https://github.com/felixge/node-formidable
+
 **NOTE**: Spark (meteor's template engine) does not currently run server side, so you are limited in what you can return here. Most likely you will want to return fairly simple things like JSON or XML documents, the construction of which is up to you.
 
 ## Examples
