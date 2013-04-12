@@ -1,6 +1,10 @@
 // XXX: is it OK to assume localhost:3000 here?
 //
 // it seems that stream does in it's tests.
+
+// Force serving before Meteor fully starts
+Meteor.Router._start();
+
 Tinytest.add("Simple Router.serve", function(test) {
   Meteor.Router.add('/server/foo', function() {
     return 'data';
