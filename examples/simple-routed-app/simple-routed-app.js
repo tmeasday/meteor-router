@@ -3,7 +3,7 @@ if (Meteor.is_client) {
     // so you can know if you've successfully in-browser browsed
     console.log('Started at ' + location.href);
   });
-  
+
   Meteor.Router.add({
     '/': 'home',
 
@@ -26,16 +26,17 @@ if (Meteor.is_client) {
     }
   });
 
-  Meteor.Router.filter('requireLogin', {only: 'welcome'})
+  Meteor.Router.filter('requireLogin', {only: 'welcome'});
 
   Template.sign_in.events = {
     'submit form': function(e) {
       e.preventDefault();
-      Session.set('username', $(e.target).find('[name=username]').val())
+      Session.set('username', $(e.target).find('[name=username]').val());
     }
-  }
+  };
 
-  Template.welcome.username = function() { return Session.get('username'); }
+  Template.welcome.username = function() { return Session.get('username'); };
+
   Template.welcome.events = {
 
     'submit form': function(event, template) {
@@ -49,34 +50,33 @@ if (Meteor.is_client) {
       e.preventDefault();
       Session.set('username', false);
     }
-  }
+  };
 
   Template.post.helpers({
     id: function() { return Session.get('postId'); }
-  })
+  });
 }
 
 if (Meteor.isServer) {
+  Meteor.Router.add({
+    '/test-endpoint': 'SOME DATA!',
+    '/second-test-endpoint': function() {
+      console.log(this.request.body);
+      return 'foo';
+    }
+  });
+
+  Meteor.Router.add({
+    '/posts/:id.xml': function(id) {
+      return Posts.findOne(id).foo;
+    }
+  });
+
   // don't actually publish this
   var Posts = new Meteor.Collection('posts');
   Meteor.startup(function() {
     if (Posts.find().count() === 0) {
       console.log('added Post: ' + Posts.insert({foo: 'bar'}));
     }
-    
-    
-    Meteor.Router.add({
-      '/test-endpoint': 'SOME DATA!',
-      '/second-test-endpoint': function() {
-        console.log(this.request.body);
-        return 'foo';
-      }
-    })
-  
-    Meteor.Router.add({
-      '/posts/:id.xml': function(id) {
-        return Posts.findOne(id).foo;
-      }
-    });
   });
 }
