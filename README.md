@@ -236,5 +236,5 @@ If you want the router to work in older version of Internet Explorer that don't 
 To run the tests, ensure that the router is checked out to a folder called `router`, and then simply run:
 
 ``` sh
-$ mrt
+$ mrt test-packages router
 ```
