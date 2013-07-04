@@ -169,3 +169,25 @@ Tinytest.add("Router before routing", function(test) {
   Meteor.Router.to('/before');
   test.equal(beforeCalled, true);
 });
+
+Tinytest.add("Router before routing interrupt", function(test) {
+  var beforeCalled = false;
+  
+  Meteor.Router.resetFilters();
+  
+  Meteor.Router.beforeRouting = function() {
+	// a method (i.e. returns undefined) should not interrupt routing 
+  }
+
+  Meteor.Router.to('/route1');
+  Meteor.flush();
+  test.equal(Meteor.Router.page(), 'page1');
+  
+  Meteor.Router.beforeRouting = function() {
+	// returning false should interrupt (block) routing
+	return false;
+  }
+
+  Meteor.Router.to('/route2');
+  test.equal(Meteor.Router.page(), 'page1');
+});
