@@ -1,3 +1,7 @@
+- 0.5.2 - 11-07-2013
+  - allow cancelling from beforeRouting (thanks @lukepur!)
+  - renderPage passed data context through.
+
 - 0.5.0
   - added named routes
   - added beforeRouting
