@@ -34,33 +34,33 @@ Tinytest.add("Router.serve with params", function(test) {
 
 Tinytest.add("Router.serve various response types", function(test) {
   Meteor.Router.add({
-    '/server/baz-1': [404, {'x-my-header': 'Baz'}, 'data'],
-    '/server/baz-2': [405, 'data'],
+    '/server/baz-1': [201, {'x-my-header': 'Baz'}, 'data'],
+    '/server/baz-2': [202, 'data'],
     '/server/baz-3': ['data'],
-    '/server/baz-4': 406,
+    '/server/baz-4': 203,
     '/server/baz-5': 'data'
   });
 
   var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-1'));
-  test.equal(resp.statusCode, 404);
+  test.equal(resp.statusCode, 201);
   test.equal(resp.content, 'data');
   test.equal(resp.headers['x-my-header'], 'Baz');
 
   // grab it again to make sure we aren't messing with it
   var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-1'));
-  test.equal(resp.statusCode, 404);
+  test.equal(resp.statusCode, 201);
   test.equal(resp.content, 'data');
   test.equal(resp.headers['x-my-header'], 'Baz');
 
   var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-2'));
-  test.equal(resp.statusCode, 405);
+  test.equal(resp.statusCode, 202);
   test.equal(resp.content, 'data');
 
   var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-3'));
   test.equal(resp.content, 'data');
 
   var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-4'));
-  test.equal(resp.statusCode, 406);
+  test.equal(resp.statusCode, 203);
 
   var resp = Meteor.http.get(Meteor.absoluteUrl('server/baz-5'));
   test.equal(resp.content, 'data');
@@ -72,7 +72,7 @@ Tinytest.add("Router.serve with futures", function(test) {
     var Future = (typeof(Npm) == "undefined") ? __meteor_bootstrap__.require("fibers/future") : Npm.require("fibers/future");
     var fut = new Future();
     setTimeout(function() {
-      fut.ret('foo-in-timeout');
+      fut.return('foo-in-timeout');
     }, 1);
 
     return fut.wait();

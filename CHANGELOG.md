@@ -1,3 +1,6 @@
+- 0.5.4 - 15-08-2013
+  - Support for 0.6.5
+
 - 0.5.2 - 11-07-2013
   - allow cancelling from beforeRouting (thanks @lukepur!)
   - renderPage passed data context through.

@@ -2,6 +2,10 @@
 
 Meteor Router builds on [page.js](https://github.com/visionmedia/page.js) to provide reactive, filterable routing for [Meteor](http://www.meteor.com/) applications.
 
+## NOTE
+
+0.5.4 is the last (non bugfix) release of router. Work has now shifted to [Iron Router](https://github.com/EventedMind/meteor-iron-router). Please consider using IR instead of Router on new projects!
+
 ## Installation
 
 Meteor Router can be installed with [Meteorite](https://github.com/oortcloud/meteorite/). From inside a Meteorite-managed app:
@@ -227,9 +231,6 @@ If you want the router to work in older version of Internet Explorer that don't 
 ```bash
   mrt add HTML5-History-API
 ```
-
-**NOTE**: Either do this before adding the router, or edit your app's `.meteor/packages` file to make sure it's listed before the router. This is a limitation that I'm working on.
-
 
 ## Contributing
 
