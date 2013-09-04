@@ -1,3 +1,6 @@
+- 0.5.4.1 - 15-08-2013
+  - Don't force HTML5-History-API on 0.6.4
+  
 - 0.5.4 - 15-08-2013
   - Support for 0.6.5
 

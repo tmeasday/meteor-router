@@ -13,7 +13,6 @@ Package.on_use(function (api, where) {
   api.use('handlebars', 'client');
   api.use('page-js-ie-support', 'client');
   api.use('underscore', ['client', 'server']);
-  api.use('HTML5-History-API', 'client', {weak: true});
   
   api.add_files('lib/router_client.js', 'client');
   api.add_files('lib/router_helpers.js', 'client');
@@ -23,6 +22,8 @@ Package.on_use(function (api, where) {
   // for backward compat before Meteor linker changes
   if (typeof api.export !== 'undefined') {
     api.use('webapp', 'server');
+    
+    api.use('HTML5-History-API', 'client', {weak: true});
   }
 });
 
