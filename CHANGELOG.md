@@ -1,3 +1,7 @@
+- 0.6.0 - update for Meteor 0.8.0
+  - use `{{> renderPage}}`
+  - many thanks to @tarangp!
+
 - 0.5.4.1 - 15-08-2013
   - Don't force HTML5-History-API on 0.6.4
   

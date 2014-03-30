@@ -4,7 +4,7 @@ Meteor Router builds on [page.js](https://github.com/visionmedia/page.js) to pro
 
 ## NOTE
 
-0.5.4 is the last (non bugfix) release of router. Work has now shifted to [Iron Router](https://github.com/EventedMind/meteor-iron-router). Please consider using IR instead of Router on new projects!
+Note that the router package is **deprecated**. Work has now shifted to [Iron Router](https://github.com/EventedMind/meteor-iron-router). Please consider using IR instead of Router on new projects!
 
 ## Installation
 
@@ -29,13 +29,13 @@ Meteor.Router.page();
 This is a reactive variable which will trigger invalidations as the app changes pages. Usually, you'll just want to render the template that corresponds to the current page using the following helper that finds the template by name:
 
 ``` handlebars
-{{renderPage}}
+{{> renderPage}}
 ```
 
 It's common to render the inside page isolated from the layout:
 
 ``` handlebars
-{{#isolate}} {{renderPage}} {{/isolate}}
+{{#isolate}} {{> renderPage}} {{/isolate}}
 ```
 
 To define a route, simply specify the URL it matches and the name of the template it should render. If you want to get fancy, you can specify a reactive function that returns a template name. It will get repeatedly executed as its reactive dependencies change.
