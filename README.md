@@ -232,6 +232,9 @@ If you want the router to work in older version of Internet Explorer that don't 
   mrt add HTML5-History-API
 ```
 
+## Older Versions of Meteor
+
+(Versions prior to v0.8.0) use `{{renderPage}}` instead of `{{>renderPage}}`
 ## Contributing
 
 To run the tests, ensure that the router is checked out to a folder called `router`, and then simply run:
